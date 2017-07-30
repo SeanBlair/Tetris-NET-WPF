@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="600" Width="600">
+    <Grid Name="ViewPortContainer">
+		<Image Name="ViewPort" Loaded="ViewPort_Loaded"></Image>
+	</Grid>
 </Window>

@@ -20,9 +20,32 @@ namespace Tetris
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		int width, height;
+		WriteableBitmap writeableBitmap;
+		Random random = new Random();
+
 		public MainWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void ViewPort_Loaded(object sender, RoutedEventArgs e)
+		{
+			width = (int)this.ViewPortContainer.ActualWidth;
+			height = (int)this.ViewPortContainer.ActualHeight;
+			writeableBitmap = BitmapFactory.New(width, height);
+			ViewPort.Source = writeableBitmap;
+			CompositionTarget.Rendering += CompositionTarget_Rendering;
+		}
+
+		private void CompositionTarget_Rendering(object sender, EventArgs e)
+		{
+			writeableBitmap.DrawEllipseCentered(
+										random.Next(width),
+										random.Next(height),
+										20,
+										20,
+										Color.FromRgb((byte)random.Next(255), (byte)random.Next(255), (byte)random.Next(255)));
 		}
 	}
 }
