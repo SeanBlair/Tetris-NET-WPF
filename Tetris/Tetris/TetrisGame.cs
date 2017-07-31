@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Windows.Input;
 using System.Diagnostics;
 using System.Threading;
 
@@ -17,44 +18,25 @@ namespace Tetris
 		// Pixels to manipulate
 		WriteableBitmap writeableBitmap;
 		bool isGameOver;
-		int millisecondsBetweenTick;
-		int score;
-		Square theSquare;
+		//int score;
+		public Square theSquare;
 
 
 		public TetrisGame(WriteableBitmap wb)
 		{
 			writeableBitmap = wb;
 			isGameOver = false;
-			millisecondsBetweenTick = 1000;
 		}
 
 		public void init()
 		{
-			theSquare = new Square(300, 300, Colors.Red);
-		}
-
-		public void nextState()
-		{
-			theSquare.y += 10;
+			theSquare = new Square(300, 100, Colors.Red);
 		}
 
 		public void render()
 		{
+			writeableBitmap.Clear();
 			theSquare.render(writeableBitmap);
-		}
-
-		public void tick()
-		{
-			Stopwatch stopwatch = Stopwatch.StartNew();
-			while (true)
-			{
-				if (stopwatch.ElapsedMilliseconds >= millisecondsBetweenTick)
-				{
-					return;
-				}
-				Thread.Sleep(1); //so processor can rest for a while
-			}
 		}
 	}
 }

@@ -25,6 +25,7 @@ namespace Tetris
 		internal void render(WriteableBitmap writeableBitmap)
 		{
 			writeableBitmap.FillRectangle(x, y, x + length, y + length, color);
+			writeableBitmap.DrawRectangle(x, y, x + length, y + length, Colors.Black);
 		}
 	}
 }

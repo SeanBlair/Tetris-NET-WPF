@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Tetris
 {
@@ -28,6 +29,31 @@ namespace Tetris
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			DispatcherTimer timer = new DispatcherTimer();
+			timer.Tick += new EventHandler(MoveSquare);
+
+			timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+
+			timer.Start();
+		}
+
+		// I think this method has to be called in this class...
+		private void MoveSquare(object sender, EventArgs e)
+		{
+			if (Keyboard.IsKeyDown(Key.Left))
+			{
+				tetrisGame.theSquare.x -= 10;
+			}
+			else if (Keyboard.IsKeyDown(Key.Right))
+			{
+				tetrisGame.theSquare.x += 10;
+			}
+			else
+			{
+				tetrisGame.theSquare.y += 10;
+			}
+			tetrisGame.render();
 		}
 
 		private void ViewPort_Loaded(object sender, RoutedEventArgs e)
@@ -37,19 +63,8 @@ namespace Tetris
 			height = (int)this.ViewPortContainer.ActualHeight;
 			writeableBitmap = BitmapFactory.New(width, height);
 			ViewPort.Source = writeableBitmap;
-
 			tetrisGame = new TetrisGame(writeableBitmap);
 			tetrisGame.init();
-			
-			CompositionTarget.Rendering += CompositionTarget_Rendering;
-		}
-
-		private void CompositionTarget_Rendering(object sender, EventArgs e)
-		{
-			writeableBitmap.Clear();
-			tetrisGame.tick();
-			tetrisGame.nextState();
-			tetrisGame.render();
 		}
 	}
 }
