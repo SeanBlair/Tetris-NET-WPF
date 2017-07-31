@@ -31,15 +31,14 @@ namespace Tetris
 			InitializeComponent();
 
 			DispatcherTimer timer = new DispatcherTimer();
-			timer.Tick += new EventHandler(MoveSquare);
-
+			timer.Tick += new EventHandler(MoveSquareDown);
 			timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
-
 			timer.Start();
+			
+			this.KeyDown += new KeyEventHandler(OnButtonDown);
 		}
 
-		// I think this method has to be called in this class...
-		private void MoveSquare(object sender, EventArgs e)
+		private void OnButtonDown(object sender, KeyEventArgs e)
 		{
 			if (Keyboard.IsKeyDown(Key.Left))
 			{
@@ -49,13 +48,19 @@ namespace Tetris
 			{
 				tetrisGame.theSquare.x += 10;
 			}
-			else
+			else if (Keyboard.IsKeyDown(Key.Down))
 			{
 				tetrisGame.theSquare.y += 10;
 			}
 			tetrisGame.render();
 		}
 
+		private void MoveSquareDown(object sender, EventArgs e)
+		{
+			tetrisGame.theSquare.y += 10;
+			tetrisGame.render();
+		}
+		
 		private void ViewPort_Loaded(object sender, RoutedEventArgs e)
 		{
 			// TODO should they be width vs ActualWidth??
