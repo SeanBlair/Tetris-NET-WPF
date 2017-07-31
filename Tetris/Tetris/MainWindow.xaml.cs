@@ -25,17 +25,25 @@ namespace Tetris
 		int width, height;
 		WriteableBitmap writeableBitmap;
 		TetrisGame tetrisGame;
+		int gameSpeed;
 
 		public MainWindow()
 		{
 			InitializeComponent();
+			gameSpeed = 1000;
 
 			DispatcherTimer timer = new DispatcherTimer();
-			timer.Tick += new EventHandler(MoveSquareDown);
-			timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+			timer.Tick += new EventHandler(tickGame);
+			timer.Interval = new TimeSpan(0, 0, 0, 0, gameSpeed);
 			timer.Start();
 			
 			this.KeyDown += new KeyEventHandler(OnKeyDown);
+		}
+
+		private void tickGame(object sender, EventArgs e)
+		{
+			tetrisGame.changeState();
+			tetrisGame.render();
 		}
 
 		private void OnKeyDown(object sender, KeyEventArgs e)
@@ -55,12 +63,6 @@ namespace Tetris
 			tetrisGame.render();
 		}
 
-		private void MoveSquareDown(object sender, EventArgs e)
-		{
-			tetrisGame.moveDown();
-			tetrisGame.render();
-		}
-		
 		private void ViewPort_Loaded(object sender, RoutedEventArgs e)
 		{
 			// TODO should they be width vs ActualWidth??
@@ -68,7 +70,7 @@ namespace Tetris
 			height = (int)this.ViewPortContainer.ActualHeight;
 			writeableBitmap = BitmapFactory.New(width, height);
 			ViewPort.Source = writeableBitmap;
-			tetrisGame = new TetrisGame(writeableBitmap);
+			tetrisGame = new TetrisGame(writeableBitmap, 20);
 			tetrisGame.init();
 		}
 	}
