@@ -57,7 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Shape.cs" />
+    <Compile Include="I_Shape.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="TetrisGame.cs" />
     <Page Include="MainWindow.xaml">

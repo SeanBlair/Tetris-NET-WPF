@@ -17,9 +17,6 @@ namespace Tetris
 
 		// Pixels to manipulate
 		WriteableBitmap writeableBitmap;
-		bool isGameOver;
-		//int score;
-		public Square theSquare;
 		I_Shape currentShape;
 		Square[,] landedSquares;
 		public static int unitLength;
@@ -33,7 +30,6 @@ namespace Tetris
 		public TetrisGame(WriteableBitmap wb, int unitLen)
 		{
 			writeableBitmap = wb;
-			isGameOver = false;
 			unitLength = unitLen;
 			right = (left + (10 * unitLength));
 			bottom = (top + (18 * unitLength));
@@ -99,8 +95,6 @@ namespace Tetris
 			return true;
 		}
 
-
-
 		private bool isSpaceToDrop(Square square)
 		{
 			var isAboveBottom = square.y + unitLength < bottom;
@@ -121,19 +115,31 @@ namespace Tetris
 
 		internal void moveLeft()
 		{
-			if (isLeftFree())
+			if (isSpaceOnLeft())
 			{
-				theSquare.x -= unitLength;
+				currentShape.moveLeft();
 			}
 		}
 
-		private bool isLeftFree()
+		private bool isSpaceOnLeft()
 		{
-			if (theSquare.x > left)
+			foreach (var square in currentShape.squares)
 			{
-				foreach (var square in landedSquares)
+				if (!isLeftFree(square))
 				{
-					if (square != null && square.x == theSquare.x - unitLength && square.y == theSquare.y)
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private bool isLeftFree(Square square)
+		{
+			if (square.x > left)
+			{
+				foreach (var sq in landedSquares)
+				{
+					if (sq != null && sq.x == square.x - unitLength && sq.y == square.y)
 					{
 						return false;
 					}
@@ -148,19 +154,31 @@ namespace Tetris
 
 		internal void moveRight()
 		{
-			if (isRightFree())
+			if (isSpaceOnRight())
 			{
-				theSquare.x += unitLength;
+				currentShape.moveRight();
 			}
 		}
 
-		private bool isRightFree()
+		private bool isSpaceOnRight()
 		{
-			if (theSquare.x + unitLength < right)
+			foreach (var square in currentShape.squares)
 			{
-				foreach (var square in landedSquares)
+				if (!isRightFree(square))
 				{
-					if (square != null && square.x == theSquare.x + unitLength && square.y == theSquare.y)
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private bool isRightFree(Square square)
+		{
+			if (square.x + unitLength < right)
+			{
+				foreach (var sq in landedSquares)
+				{
+					if (sq != null && sq.x == square.x + unitLength && sq.y == square.y)
 					{
 						return false;
 					}

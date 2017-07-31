@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -35,6 +36,22 @@ namespace Tetris
 			foreach (var square in squares)
 			{
 				square.y += unitLength;
+			}
+		}
+
+		internal void moveLeft()
+		{
+			foreach (var square in squares)
+			{
+				square.x -= unitLength;
+			}
+		}
+
+		internal void moveRight()
+		{
+			foreach (var square in squares)
+			{
+				square.x += unitLength;
 			}
 		}
 	}
