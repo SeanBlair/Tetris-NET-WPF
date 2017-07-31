@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,7 +23,7 @@ namespace Tetris
 	{
 		int width, height;
 		WriteableBitmap writeableBitmap;
-		Random random = new Random();
+		TetrisGame tetrisGame;
 
 		public MainWindow()
 		{
@@ -31,21 +32,24 @@ namespace Tetris
 
 		private void ViewPort_Loaded(object sender, RoutedEventArgs e)
 		{
+			// TODO should they be width vs ActualWidth??
 			width = (int)this.ViewPortContainer.ActualWidth;
 			height = (int)this.ViewPortContainer.ActualHeight;
 			writeableBitmap = BitmapFactory.New(width, height);
 			ViewPort.Source = writeableBitmap;
+
+			tetrisGame = new TetrisGame(writeableBitmap);
+			tetrisGame.init();
+			
 			CompositionTarget.Rendering += CompositionTarget_Rendering;
 		}
 
 		private void CompositionTarget_Rendering(object sender, EventArgs e)
 		{
-			writeableBitmap.DrawEllipseCentered(
-										random.Next(width),
-										random.Next(height),
-										20,
-										20,
-										Color.FromRgb((byte)random.Next(255), (byte)random.Next(255), (byte)random.Next(255)));
+			writeableBitmap.Clear();
+			tetrisGame.tick();
+			tetrisGame.nextState();
+			tetrisGame.render();
 		}
 	}
 }
