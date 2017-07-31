@@ -20,6 +20,7 @@ namespace Tetris
 		bool isGameOver;
 		//int score;
 		public Square theSquare;
+		I_Shape currentShape;
 		Square[,] landedSquares;
 		public static int unitLength;
 		static int left = 100;
@@ -41,14 +42,14 @@ namespace Tetris
 
 		public void init()
 		{
-			theSquare = new Square(left + (5 * unitLength), top, Colors.Red);
+			currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
 		}
 
 		public void render()
 		{
 			writeableBitmap.Clear();
 			writeableBitmap.DrawRectangle(left, top, right, bottom, Colors.Black);
-			theSquare.render(writeableBitmap);
+			currentShape.render(writeableBitmap);
 			renderLandedSquares();
 		}
 
@@ -65,30 +66,52 @@ namespace Tetris
 
 		internal void changeState()
 		{
-			if (isSpaceToDrop())
+			if (isSpaceForShapeToDrop())
 			{
-				theSquare.y += unitLength;
+				currentShape.moveDown();
 			}
 			else
 			{
-				var xIndex = (theSquare.x - left) / unitLength;
-				var yIndex = (theSquare.y - top) / unitLength;
-				landedSquares[xIndex, yIndex] = theSquare;
-				theSquare = new Square(left + (5 * unitLength), top, Colors.Red);
+				addShapeToLandedSquares();
+				currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
 			}
 		}
 
-		private bool isSpaceToDrop()
+		private void addShapeToLandedSquares()
 		{
-			var isAboveBottom = theSquare.y + unitLength < bottom;
-			return isAboveBottom && isAboveAllLanded();
+			foreach (var square in currentShape.squares)
+			{
+				var xIndex = (square.x - left) / unitLength;
+				var yIndex = (square.y - top) / unitLength;
+				landedSquares[xIndex, yIndex] = square;
+			}
 		}
 
-		private bool isAboveAllLanded()
+		private bool isSpaceForShapeToDrop()
 		{
-			foreach (var square in landedSquares)
+			foreach (var square in currentShape.squares)
 			{
-				if (square != null && square.x == theSquare.x && square.y == theSquare.y + unitLength)
+				if (!isSpaceToDrop(square))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+
+
+		private bool isSpaceToDrop(Square square)
+		{
+			var isAboveBottom = square.y + unitLength < bottom;
+			return isAboveBottom && isAboveAllLanded(square);
+		}
+
+		private bool isAboveAllLanded(Square square)
+		{
+			foreach (var sq in landedSquares)
+			{
+				if (sq != null && sq.x == square.x && sq.y == square.y + unitLength)
 				{
 					return false;
 				}
