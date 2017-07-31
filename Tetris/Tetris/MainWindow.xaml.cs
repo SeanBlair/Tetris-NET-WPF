@@ -58,7 +58,7 @@ namespace Tetris
 			}
 			else if (Keyboard.IsKeyDown(Key.Down))
 			{
-				tetrisGame.moveDown();
+				tetrisGame.changeState();
 			}
 			tetrisGame.render();
 		}

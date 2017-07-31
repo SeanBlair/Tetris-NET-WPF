@@ -65,7 +65,7 @@ namespace Tetris
 
 		internal void changeState()
 		{
-			if (theSquare.y + unitLength < bottom)
+			if (isSpaceToDrop())
 			{
 				theSquare.y += unitLength;
 			}
@@ -78,27 +78,75 @@ namespace Tetris
 			}
 		}
 
+		private bool isSpaceToDrop()
+		{
+			var isAboveBottom = theSquare.y + unitLength < bottom;
+			return isAboveBottom && isAboveAllLanded();
+		}
+
+		private bool isAboveAllLanded()
+		{
+			foreach (var square in landedSquares)
+			{
+				if (square != null && square.x == theSquare.x && square.y == theSquare.y + unitLength)
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
 		internal void moveLeft()
 		{
-			if (theSquare.x > left)
+			if (isLeftFree())
 			{
 				theSquare.x -= unitLength;
 			}
 		}
 
+		private bool isLeftFree()
+		{
+			if (theSquare.x > left)
+			{
+				foreach (var square in landedSquares)
+				{
+					if (square != null && square.x == theSquare.x - unitLength && square.y == theSquare.y)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		internal void moveRight()
 		{
-			if (theSquare.x + unitLength < right)
+			if (isRightFree())
 			{
 				theSquare.x += unitLength;
 			}
 		}
 
-		internal void moveDown()
+		private bool isRightFree()
 		{
-			if (theSquare.y + unitLength < bottom)
+			if (theSquare.x + unitLength < right)
 			{
-				theSquare.y += unitLength;
+				foreach (var square in landedSquares)
+				{
+					if (square != null && square.x == theSquare.x + unitLength && square.y == theSquare.y)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 	}
