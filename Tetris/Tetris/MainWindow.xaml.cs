@@ -35,29 +35,29 @@ namespace Tetris
 			timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
 			timer.Start();
 			
-			this.KeyDown += new KeyEventHandler(OnButtonDown);
+			this.KeyDown += new KeyEventHandler(OnKeyDown);
 		}
 
-		private void OnButtonDown(object sender, KeyEventArgs e)
+		private void OnKeyDown(object sender, KeyEventArgs e)
 		{
 			if (Keyboard.IsKeyDown(Key.Left))
 			{
-				tetrisGame.theSquare.x -= 10;
+				tetrisGame.moveLeft();
 			}
 			else if (Keyboard.IsKeyDown(Key.Right))
 			{
-				tetrisGame.theSquare.x += 10;
+				tetrisGame.moveRight();
 			}
 			else if (Keyboard.IsKeyDown(Key.Down))
 			{
-				tetrisGame.theSquare.y += 10;
+				tetrisGame.moveDown();
 			}
 			tetrisGame.render();
 		}
 
 		private void MoveSquareDown(object sender, EventArgs e)
 		{
-			tetrisGame.theSquare.y += 10;
+			tetrisGame.moveDown();
 			tetrisGame.render();
 		}
 		

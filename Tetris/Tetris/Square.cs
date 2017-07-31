@@ -13,7 +13,7 @@ namespace Tetris
 		public int x;
 		public int y;
 		Color color;
-		int length = 10;
+		int length = TetrisGame.unitLength;
 
 		public Square(int x, int y, Color color)
 		{
