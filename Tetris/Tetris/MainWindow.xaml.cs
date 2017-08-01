@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Tetris
@@ -26,13 +15,14 @@ namespace Tetris
 		WriteableBitmap writeableBitmap;
 		TetrisGame tetrisGame;
 		int gameSpeed;
+		DispatcherTimer timer;
 
 		public MainWindow()
 		{
 			InitializeComponent();
 			gameSpeed = 1000;
 
-			DispatcherTimer timer = new DispatcherTimer();
+			timer = new DispatcherTimer();
 			timer.Tick += new EventHandler(tickGame);
 			timer.Interval = new TimeSpan(0, 0, 0, 0, gameSpeed);
 			timer.Start();
@@ -44,6 +34,16 @@ namespace Tetris
 		{
 			tetrisGame.changeState();
 			tetrisGame.render();
+			this.tbScore.Text = "Score is: " + tetrisGame.score;
+			adjustGameSpeed(tetrisGame.score);
+		}
+
+		private void adjustGameSpeed(int score)
+		{
+			var factor = score / 10;
+			gameSpeed = 1000 - factor * 200;
+			timer.Interval = new TimeSpan(0, 0, 0, 0, gameSpeed);
+			timer.Start();
 		}
 
 		private void OnKeyDown(object sender, KeyEventArgs e)

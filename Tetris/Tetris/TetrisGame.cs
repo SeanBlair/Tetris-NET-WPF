@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
-using System.Windows.Input;
-using System.Diagnostics;
-using System.Threading;
 using Tetris.Shapes;
 
 namespace Tetris
@@ -26,6 +19,7 @@ namespace Tetris
 		static int top = 100;
 		int bottom;
 		Random random;
+		public int score;
 
 
 		public TetrisGame(WriteableBitmap wb, int unitLen)
@@ -41,6 +35,7 @@ namespace Tetris
 		public void init()
 		{
 			currentShape = getNextShape();
+			score = 0;
 		}
 
 		private Shape getNextShape()
@@ -78,7 +73,7 @@ namespace Tetris
 			currentShape.render(writeableBitmap);
 			renderLandedSquares();
 		}
-
+		
 		private void renderLandedSquares()
 		{
 			foreach (var square in landedSquares)
@@ -112,6 +107,7 @@ namespace Tetris
 				{
 					removeRow(i);
 					dropLandedAbove(i);
+					score++;
 				}
 			}
 		}
