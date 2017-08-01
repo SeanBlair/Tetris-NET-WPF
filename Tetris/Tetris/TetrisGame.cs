@@ -73,6 +73,48 @@ namespace Tetris
 			}
 		}
 
+		internal void rotate()
+		{
+			var rotated = currentShape.rotate();
+			if (isSpaceToRotate(rotated))
+			{
+				currentShape = rotated;
+			}
+		}
+
+		private bool isSpaceToRotate(I_Shape rotated)
+		{
+			foreach (var square in rotated.squares)
+			{
+				if (!isSpace(square))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		private bool isSpace(Square square)
+		{
+			var x = square.x;
+			var y = square.y;
+			if (x >= left && x < right && y >= top && y < bottom)
+			{
+				foreach (var sq in landedSquares)
+				{
+					if (sq != null && x == sq.x && y == sq.y)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		private void addShapeToLandedSquares()
 		{
 			foreach (var square in currentShape.squares)

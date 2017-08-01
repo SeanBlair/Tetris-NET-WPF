@@ -60,6 +60,10 @@ namespace Tetris
 			{
 				tetrisGame.changeState();
 			}
+			else if (Keyboard.IsKeyDown(Key.Up))
+			{
+				tetrisGame.rotate();
+			}
 			tetrisGame.render();
 		}
 
