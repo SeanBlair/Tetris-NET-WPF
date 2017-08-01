@@ -99,8 +99,60 @@ namespace Tetris
 			else
 			{
 				addShapeToLandedSquares();
+				removeFullRows();
 				currentShape = getNextShape();
 			}
+		}
+
+		private void removeFullRows()
+		{
+			for (var i = 0; i < 18; i++)
+			{
+				if (isFullRow(i))
+				{
+					removeRow(i);
+					dropLandedAbove(i);
+				}
+			}
+		}
+
+		// modifies the y coordinates of all Squares above index
+		// and drops all Square objects to correct location in landedSquares
+		// (one lower).
+		private void dropLandedAbove(int index)
+		{
+			for (var i = index - 1; i >= 0; i--)
+			{
+				for (var j = 0; j < 10; j++)
+				{
+					var square = landedSquares[j, i];
+					if (square != null)
+					{
+						square.y += unitLength;
+					}
+					landedSquares[j, i + 1] = square; 
+				}
+			}
+		}
+
+		private void removeRow(int index)
+		{
+			for (var i = 0; i < 10; i++)
+			{
+				landedSquares[i, index] = null;
+			}
+		}
+
+		private bool isFullRow(int index)
+		{
+			for (var i = 0; i < 10; i++)
+			{
+				if (landedSquares[i, index] == null)
+				{
+					return false;
+				}
+			}
+			return true;
 		}
 
 		internal void rotate()
