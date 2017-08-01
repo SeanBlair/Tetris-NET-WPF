@@ -14,7 +14,7 @@ namespace Tetris.Shapes
 		public int unitLength;
 		public Color color;
 
-		public void render(WriteableBitmap wb)
+		public virtual void render(WriteableBitmap wb)
 		{
 			foreach (var square in squares)
 			{
@@ -25,7 +25,7 @@ namespace Tetris.Shapes
 			}
 		}
 
-		public void moveDown()
+		public virtual void moveDown()
 		{
 			foreach (var square in squares)
 			{
@@ -36,7 +36,7 @@ namespace Tetris.Shapes
 			}
 		}
 
-		internal void moveLeft()
+		public virtual void moveLeft()
 		{
 			foreach (var square in squares)
 			{
@@ -47,7 +47,7 @@ namespace Tetris.Shapes
 			}
 		}
 
-		internal void moveRight()
+		public virtual void moveRight()
 		{
 			foreach (var square in squares)
 			{
@@ -59,7 +59,7 @@ namespace Tetris.Shapes
 		}
 
 		// returns a shape rotated 90 degrees clockwise
-		internal Shape rotate()
+		public virtual Shape rotate()
 		{
 			// Top left corrner coords of the squares 2d array.
 			var x = squares[1, 1].x - unitLength;

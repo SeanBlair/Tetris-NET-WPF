@@ -57,7 +57,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="I_Shape.cs" />
+    <Compile Include="I_ShapeOriginal.cs" />
+    <Compile Include="Shapes\I_Shape.cs" />
+    <Compile Include="Shapes\Lb_Shape.cs" />
+    <Compile Include="Shapes\L_Shape.cs" />
+    <Compile Include="Shapes\O_Shape.cs" />
+    <Compile Include="Shapes\Sb_Shape.cs" />
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="Shapes\S_Shape.cs" />
     <Compile Include="Shapes\T_Shape.cs" />

@@ -45,14 +45,27 @@ namespace Tetris
 
 		private Shape getNextShape()
 		{
+			var startingX = left + 3 * unitLength;
 			Shape next = null;
-			switch (random.Next(2))
+			switch (random.Next(6))
 			{
 				case 0:
-					next = new S_Shape(left + 3 * unitLength, top, unitLength);
+					next = new S_Shape(startingX, top, unitLength);
 					break;
 				case 1:
-					next = new T_Shape(left + 3 * unitLength, top, unitLength);
+					next = new T_Shape(startingX, top, unitLength);
+					break;
+				case 2:
+					next = new Sb_Shape(startingX, top, unitLength);
+					break;
+				case 3:
+					next = new L_Shape(startingX, top, unitLength);
+					break;
+				case 4:
+					next = new Lb_Shape(startingX, top, unitLength);
+					break;
+				case 5:
+					next = new O_Shape(startingX, top, unitLength);
 					break;
 			}
 			return next;
@@ -86,8 +99,6 @@ namespace Tetris
 			else
 			{
 				addShapeToLandedSquares();
-				//currentShape = new S_Shape(left + 3 * unitLength, top, unitLength);
-				//currentShape = allShapes[random.Next()];4
 				currentShape = getNextShape();
 			}
 		}

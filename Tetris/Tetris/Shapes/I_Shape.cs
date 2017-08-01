@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Tetris
+namespace Tetris.Shapes
 {
-	internal class I_Shape
-	{
-		enum Rotation {zero, ninety};
+    class I_Shape : Shape 
+    {
+		enum Rotation { zero, ninety };
 
-		public Square[] squares;
-		Color color = Colors.Yellow;
-		int unitLength;
+		// hiding base.squares as there is different logic to this shape.
+		new Square[] squares;
 		Rotation rotation;
 
 		public I_Shape(int x, int y, int unitLength)
 		{
-			this.unitLength = unitLength;
+			base.unitLength = unitLength;
+			base.color = Colors.Yellow;
 			squares = new Square[]
 			{
 				new Square(x, y, color),
@@ -27,7 +30,9 @@ namespace Tetris
 			rotation = Rotation.zero;
 		}
 
-		public void render(WriteableBitmap wb)
+
+
+		public override void render(WriteableBitmap wb)
 		{
 			foreach (var square in squares)
 			{
@@ -35,7 +40,7 @@ namespace Tetris
 			}
 		}
 
-		public void moveDown()
+		public override void moveDown()
 		{
 			foreach (var square in squares)
 			{
@@ -43,7 +48,7 @@ namespace Tetris
 			}
 		}
 
-		internal void moveLeft()
+		public override void moveLeft()
 		{
 			foreach (var square in squares)
 			{
@@ -51,7 +56,7 @@ namespace Tetris
 			}
 		}
 
-		internal void moveRight()
+		public override void moveRight()
 		{
 			foreach (var square in squares)
 			{
@@ -59,11 +64,11 @@ namespace Tetris
 			}
 		}
 
-		internal I_Shape rotate()
+		public override Shape rotate()
 		{
 			Square[] rotated = new Square[4];
 			Square[] original = this.squares;
-			I_Shape rotatedI_Shape = new I_Shape(0, 0, unitLength);
+			I_Shape rotatedShape = new I_Shape(0, 0, this.unitLength);
 
 			Square square;
 			switch (rotation)
@@ -82,8 +87,8 @@ namespace Tetris
 						square = new Square(original[3].x - unitLength, original[3].y + 2 * unitLength, color);
 						rotated[3] = square;
 
-						rotatedI_Shape.squares = rotated;
-						rotatedI_Shape.rotation = Rotation.ninety;
+						rotatedShape.squares = rotated;
+						rotatedShape.rotation = Rotation.ninety;
 						break;
 					}
 				case Rotation.ninety:
@@ -100,12 +105,12 @@ namespace Tetris
 						square = new Square(original[3].x + unitLength, original[3].y - 2 * unitLength, color);
 						rotated[3] = square;
 
-						rotatedI_Shape.squares = rotated;
-						rotatedI_Shape.rotation = Rotation.zero;
+						rotatedShape.squares = rotated;
+						rotatedShape.rotation = Rotation.zero;
 						break;
 					}
 			}
-			return rotatedI_Shape;
+			return rotatedShape;
 		}
 	}
 }
