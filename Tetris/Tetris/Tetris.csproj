@@ -60,6 +60,7 @@
     <Compile Include="I_Shape.cs" />
     <Compile Include="Square.cs" />
     <Compile Include="TetrisGame.cs" />
+    <Compile Include="T_Shape.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

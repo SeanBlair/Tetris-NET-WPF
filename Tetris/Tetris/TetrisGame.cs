@@ -17,7 +17,8 @@ namespace Tetris
 
 		// Pixels to manipulate
 		WriteableBitmap writeableBitmap;
-		I_Shape currentShape;
+		//I_Shape currentShape;
+		T_Shape currentShape;
 		Square[,] landedSquares;
 		public static int unitLength;
 		static int left = 100;
@@ -38,7 +39,8 @@ namespace Tetris
 
 		public void init()
 		{
-			currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
+			//currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
+			currentShape = new T_Shape(left + 3 * unitLength, top, unitLength);
 		}
 
 		public void render()
@@ -69,7 +71,8 @@ namespace Tetris
 			else
 			{
 				addShapeToLandedSquares();
-				currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
+				//currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
+				currentShape = new T_Shape(left + 3 * unitLength, top, unitLength);
 			}
 		}
 
@@ -82,13 +85,16 @@ namespace Tetris
 			}
 		}
 
-		private bool isSpaceToRotate(I_Shape rotated)
+		private bool isSpaceToRotate(T_Shape rotated)
 		{
 			foreach (var square in rotated.squares)
 			{
-				if (!isSpace(square))
+				if (square != null)
 				{
-					return false;
+					if (!isSpace(square))
+					{
+						return false;
+					}
 				}
 			}
 			return true;
@@ -119,9 +125,12 @@ namespace Tetris
 		{
 			foreach (var square in currentShape.squares)
 			{
-				var xIndex = (square.x - left) / unitLength;
-				var yIndex = (square.y - top) / unitLength;
-				landedSquares[xIndex, yIndex] = square;
+				if (square != null)
+				{
+					var xIndex = (square.x - left) / unitLength;
+					var yIndex = (square.y - top) / unitLength;
+					landedSquares[xIndex, yIndex] = square;
+				}
 			}
 		}
 
@@ -129,9 +138,12 @@ namespace Tetris
 		{
 			foreach (var square in currentShape.squares)
 			{
-				if (!isSpaceToDrop(square))
+				if (square != null)
 				{
-					return false;
+					if (!isSpaceToDrop(square))
+					{
+						return false;
+					}
 				}
 			}
 			return true;
@@ -167,9 +179,12 @@ namespace Tetris
 		{
 			foreach (var square in currentShape.squares)
 			{
-				if (!isLeftFree(square))
+				if (square != null)
 				{
-					return false;
+					if (!isLeftFree(square))
+					{
+						return false;
+					}
 				}
 			}
 			return true;
@@ -206,9 +221,12 @@ namespace Tetris
 		{
 			foreach (var square in currentShape.squares)
 			{
-				if (!isRightFree(square))
+				if (square != null)
 				{
-					return false;
+					if (!isRightFree(square))
+					{
+						return false;
+					}
 				}
 			}
 			return true;
