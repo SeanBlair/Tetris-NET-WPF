@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.Threading;
+using Tetris.Shapes;
 
 namespace Tetris
 {
@@ -17,15 +18,14 @@ namespace Tetris
 
 		// Pixels to manipulate
 		WriteableBitmap writeableBitmap;
-		//I_Shape currentShape;
-		T_Shape currentShape;
+		Shape currentShape;
 		Square[,] landedSquares;
 		public static int unitLength;
 		static int left = 100;
 		int right;
 		static int top = 100;
 		int bottom;
-
+		Random random;
 
 
 		public TetrisGame(WriteableBitmap wb, int unitLen)
@@ -35,12 +35,27 @@ namespace Tetris
 			right = (left + (10 * unitLength));
 			bottom = (top + (18 * unitLength));
 			landedSquares = new Square[10, 18];
+			random = new Random();
 		}
 
 		public void init()
 		{
-			//currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
-			currentShape = new T_Shape(left + 3 * unitLength, top, unitLength);
+			currentShape = getNextShape();
+		}
+
+		private Shape getNextShape()
+		{
+			Shape next = null;
+			switch (random.Next(2))
+			{
+				case 0:
+					next = new S_Shape(left + 3 * unitLength, top, unitLength);
+					break;
+				case 1:
+					next = new T_Shape(left + 3 * unitLength, top, unitLength);
+					break;
+			}
+			return next;
 		}
 
 		public void render()
@@ -71,8 +86,9 @@ namespace Tetris
 			else
 			{
 				addShapeToLandedSquares();
-				//currentShape = new I_Shape(left + 3 * unitLength, top, unitLength);
-				currentShape = new T_Shape(left + 3 * unitLength, top, unitLength);
+				//currentShape = new S_Shape(left + 3 * unitLength, top, unitLength);
+				//currentShape = allShapes[random.Next()];4
+				currentShape = getNextShape();
 			}
 		}
 
@@ -85,7 +101,7 @@ namespace Tetris
 			}
 		}
 
-		private bool isSpaceToRotate(T_Shape rotated)
+		private bool isSpaceToRotate(Shape rotated)
 		{
 			foreach (var square in rotated.squares)
 			{
