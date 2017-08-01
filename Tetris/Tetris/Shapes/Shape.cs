@@ -9,7 +9,7 @@ namespace Tetris.Shapes
 		public int unitLength;
 		public Color color;
 
-		public virtual void render(WriteableBitmap wb)
+		public void render(WriteableBitmap wb)
 		{
 			foreach (var square in squares)
 			{
@@ -20,7 +20,7 @@ namespace Tetris.Shapes
 			}
 		}
 
-		public virtual void moveDown()
+		public void moveDown()
 		{
 			foreach (var square in squares)
 			{
@@ -31,7 +31,7 @@ namespace Tetris.Shapes
 			}
 		}
 
-		public virtual void moveLeft()
+		public void moveLeft()
 		{
 			foreach (var square in squares)
 			{
@@ -42,7 +42,7 @@ namespace Tetris.Shapes
 			}
 		}
 
-		public virtual void moveRight()
+		public void moveRight()
 		{
 			foreach (var square in squares)
 			{
@@ -54,25 +54,37 @@ namespace Tetris.Shapes
 		}
 
 		// returns a shape rotated 90 degrees clockwise
-		public virtual Shape rotate()
+		public Shape rotate()
 		{
 			// Top left corrner coords of the squares 2d array.
-			var x = squares[1, 1].x - unitLength;
-			var y = squares[1, 1].y - unitLength;
-			Shape rotated = new Shape { unitLength = this.unitLength, color = this.color };
-			Square[,] flipped = new Square[3, 3];
-
-			for (var i = 0; i < 3; i++)
+			int x;
+			int y;
+			if (squares[1, 1] != null)
 			{
-				for (var j = 0; j < 3; j++)
+				x = squares[1, 1].x - unitLength;
+				y = squares[1, 1].y - unitLength;
+			}
+			else
+			{
+				x = squares[2, 2].x - 2 * unitLength;
+				y = squares[2, 2].y - 2 * unitLength;
+			}
+
+			Shape rotated = new Shape { unitLength = this.unitLength, color = this.color };
+			var arrayLength = this.squares.GetLength(0);
+			Square[,] flipped = new Square[arrayLength, arrayLength];
+
+			for (var i = 0; i < arrayLength; i++)
+			{
+				for (var j = 0; j < arrayLength; j++)
 				{
 					Square sqr = null;
 					if (squares[i, j] != null)
 					{
 						// Adjusts the coords to implement a 90 degree clockwise rotation.
-						sqr = new Square(x + ((2 - i) * unitLength), y + (j * unitLength), color);
+						sqr = new Square(x + ((arrayLength - 1 - i) * unitLength), y + (j * unitLength), color);
 					}
-					flipped[j, 2 - i] = sqr;
+					flipped[j, arrayLength - 1 - i] = sqr;
 				}
 			}
 			rotated.squares = flipped;

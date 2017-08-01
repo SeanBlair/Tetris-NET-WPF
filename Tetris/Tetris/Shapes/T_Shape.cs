@@ -7,7 +7,7 @@ namespace Tetris.Shapes
 		public T_Shape(int x, int y, int unitLength)
 		{
 			base.unitLength = unitLength;
-			base.color = Colors.Red;
+			base.color = Colors.Olive;
 			base.squares = new Square[,]
 			{
 				{ null, new Square(x + unitLength, y, color), null },

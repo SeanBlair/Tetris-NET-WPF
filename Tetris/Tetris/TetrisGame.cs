@@ -42,7 +42,7 @@ namespace Tetris
 		{
 			var startingX = left + 3 * unitLength;
 			Shape next = null;
-			switch (random.Next(6))
+			switch (random.Next(7))
 			{
 				case 0:
 					next = new S_Shape(startingX, top, unitLength);
@@ -61,6 +61,9 @@ namespace Tetris
 					break;
 				case 5:
 					next = new O_Shape(startingX, top, unitLength);
+					break;
+				case 6:
+					next = new I_Shape(startingX, top, unitLength);
 					break;
 			}
 			return next;

@@ -7,7 +7,7 @@ namespace Tetris.Shapes
 		public Sb_Shape(int x, int y, int unitLength)
 		{
 			base.unitLength = unitLength;
-			base.color = Colors.Yellow;
+			base.color = Colors.Maroon;
 			base.squares = new Square[,]
 			{
 				{ new Square(x, y, color), new Square(x + unitLength, y, color), null },
