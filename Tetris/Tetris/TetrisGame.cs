@@ -8,8 +8,7 @@ namespace Tetris
 	class TetrisGame
 	{
 		// Classic tetris appears to be 10 square wide, and 18 square high.
-
-		// Pixels to manipulate
+		
 		WriteableBitmap writeableBitmap;
 		Shape currentShape;
 		Square[,] landedSquares;

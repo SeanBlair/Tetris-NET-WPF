@@ -9,11 +9,11 @@ namespace Tetris.Shapes
 			base.unitLength = unitLength;
 			base.color = Colors.Blue;
 			base.squares = new Square[,]
-				{
-					{ null, new Square(x + unitLength, y, color), new Square(x + 2 * unitLength, y, color)},
-					{ new Square(x, y + unitLength, color), new Square(x + unitLength, y + unitLength, color), null },
-					{null, null, null }
-				};
+			{
+				{ null, new Square(x + unitLength, y, color), new Square(x + 2 * unitLength, y, color)},
+				{ new Square(x, y + unitLength, color), new Square(x + unitLength, y + unitLength, color), null },
+				{null, null, null }
+			};
 		}
 	}
 }

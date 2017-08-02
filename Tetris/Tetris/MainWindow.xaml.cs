@@ -40,8 +40,11 @@ namespace Tetris
 
 		private void adjustGameSpeed(int score)
 		{
-			var factor = score / 10;
-			gameSpeed = 1000 - factor * 200;
+			if (gameSpeed > 200)
+			{
+				var factor = score / 10;
+				gameSpeed = 1000 - factor * 200;
+			}
 			timer.Interval = new TimeSpan(0, 0, 0, 0, gameSpeed);
 			timer.Start();
 		}

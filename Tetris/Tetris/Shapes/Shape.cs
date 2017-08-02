@@ -56,9 +56,10 @@ namespace Tetris.Shapes
 		// returns a shape rotated 90 degrees clockwise
 		public Shape rotate()
 		{
-			// Top left corrner coords of the squares 2d array.
+			// Top left corner coords of the squares 2d array.
 			int x;
 			int y;
+			// one of these 2 locations will always have a Square object.
 			if (squares[1, 1] != null)
 			{
 				x = squares[1, 1].x - unitLength;
@@ -84,6 +85,7 @@ namespace Tetris.Shapes
 						// Adjusts the coords to implement a 90 degree clockwise rotation.
 						sqr = new Square(x + ((arrayLength - 1 - i) * unitLength), y + (j * unitLength), color);
 					}
+					// places sqr in location 90 degrees clockwise from original location of 2D array.
 					flipped[j, arrayLength - 1 - i] = sqr;
 				}
 			}
