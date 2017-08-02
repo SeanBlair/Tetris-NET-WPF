@@ -65,7 +65,7 @@
     <Compile Include="Shapes\Shape.cs" />
     <Compile Include="Shapes\S_Shape.cs" />
     <Compile Include="Shapes\T_Shape.cs" />
-    <Compile Include="Square.cs" />
+    <Compile Include="Shapes\Square.cs" />
     <Compile Include="TetrisGame.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
